@@ -8,7 +8,7 @@ header('Access-Control-Allow-Origin: *');
 
 
 while(true) {
-	echo '' . sha1(mt_rand()) . "\n\n";
+	echo sha1(mt_rand()) . "\n\n";
 	@ob_flush();
 	@flush();
 	usleep(200000);
