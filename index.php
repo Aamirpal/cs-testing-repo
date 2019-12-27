@@ -7,9 +7,10 @@ header('Access-Control-Allow-Origin: *');
 header('Transfer-Encoding: chunked');
 header('Access-Control-Allow-Credentials: true');
 
+
 while(true) {
 	echo ': ' . sha1(mt_rand()) . "\n\n";
 	@ob_flush();
 	@flush();
-	sleep(1);
+	usleep(1000);
 }
