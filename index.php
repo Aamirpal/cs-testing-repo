@@ -4,6 +4,8 @@ header('X-Accel-Buffering: no');
 header('Cache-Contro: no-cache');
 header('Connection: keep-alive');
 header('Access-Control-Allow-Origin: *');
+header('Transfer-Encoding: chunked');
+header('Access-Control-Allow-Credentials: true');
 
 while(true) {
 	echo ': ' . sha1(mt_rand()) . "\n\n";
