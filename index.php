@@ -4,7 +4,7 @@ header('X-Accel-Buffering: no');
 header('Cache-Contro: no-cache');
 header('Connection: keep-alive');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Credentials: true');
+// header('Access-Control-Allow-Credentials: true');
 
 
 while(true) {
