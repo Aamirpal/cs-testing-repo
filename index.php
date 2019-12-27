@@ -11,5 +11,5 @@ while(true) {
 	echo '' . sha1(mt_rand()) . "\n\n";
 	@ob_flush();
 	@flush();
-	sleep(2);
+	usleep(200000);
 }
