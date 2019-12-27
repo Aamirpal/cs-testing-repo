@@ -9,8 +9,9 @@ header('Access-Control-Allow-Credentials: true');
 
 
 while(true) {
-	echo ': ' . sha1(mt_rand()) . "\n\n";
+	echo 'id: ' . sha1(mt_rand()) . "\n\n";
+	echo 'data: ' . sha1(mt_rand()) . "\n\n";
 	@ob_flush();
 	@flush();
-	usleep(1000);
+	usleep(2000);
 }
