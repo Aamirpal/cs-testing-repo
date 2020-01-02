@@ -43,7 +43,6 @@
 <IfModule mod_deflate.c>
     <filesMatch "\.(js|css|html|php|jpg|jpeg|png)$">
         SetOutputFilter DEFLATE
-        php_value output_buffering Off
     </filesMatch>
 </IfModule>
 

@@ -17,6 +17,7 @@ class TestingController extends Controller
 
     public function streamNotifications()
     {
+        ini_set('output_buffering', 0);
         if (ob_get_level() == 0) ob_start();
         for ($i = 0; $i<10; $i++){
 
