@@ -17,26 +17,48 @@ class TestingController extends Controller
 
     public function streamNotifications()
     {
-        ob_end_clean();
-        $timeout = env('NOTIFICATION_STREAM_TIMEOUT', 8);
-        $response = new StreamedResponse(function() use ($timeout) {
-            // send an initial event to keep the connection alive
-            $count = 0;
-            while ($count < 10) {
-                echo "event: ping".time()."\n";
-                echo "data: ping\n\n";
-                flush();
-                usleep(1000000);
-                $count++;
-            }
-        }, Response::HTTP_OK, array(
-            'Content-Type' => 'text/event-stream',
-            'Cache-Control' => 'no-cache',
-            'X-Accel-Buffering' => 'no',
-            'Connection' => 'keep-alive',
-            'Access-Control-Allow-Origin' => '*'
-        ));
+        session_write_close();
+        @set_time_limit(0); // Disable time limit
+        // Prevent buffering
+        if (function_exists('apache_setenv')) {
+            @apache_setenv('no-gzip', 1);
+        }
+        @ini_set('zlib.output_compression', 0);
+        @ini_set('implicit_flush', 1);
+        // while (ob_get_level() != 0) {
+        //     ob_end_flush();
+        // }
+        ob_implicit_flush(1);
+        /* ultility function for sending SSE messages */
+        header('Content-Type: text/event-stream, charset=UTF-8');
+        header('Cache-Control: no-cache,  must-revalidate');
+        //header('Transfer-encoding: chunked');
+        header('X-Accel-Buffering: no');
+        header('Connection: keep-alive');
+        while (ob_get_level()) ob_end_clean();
+        $counter = 1;
+        while (1) {
+            // Every second, send a "ping" event.
+            
+            flush();
+            ob_get_contents();
+            $curDate = date("r h:i:sa");
+            print("id: {$counter}\n");
+            //print("event: ping\n");
+            print("data: The server time is: {$curDate}{$counter}\n\n");
+            //print('data: "time": "' . $curDate . '"');
+            //  print("\n\n");
         
-        return $response;
+            // Send a simple message at random intervals.
+            
+            flush();
+            if($counter < 50){
+                usleep(2 * 10000);
+            }else{
+                sleep(5);
+            }
+            
+            $counter++;
+        }
     }
 }
