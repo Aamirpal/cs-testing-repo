@@ -22,11 +22,12 @@ class TestingController extends Controller
         $response = new StreamedResponse(function() use ($timeout) {
             // send an initial event to keep the connection alive
             $count = 0;
-            while (true) {
+            while ($count < 10) {
                 echo "event: ping".time()."\n";
                 echo "data: ping\n\n";
                 flush();
-                usleep(2000000);
+                usleep(1000000);
+                $count++;
             }
         }, Response::HTTP_OK, array(
             'Content-Type' => 'text/event-stream',
